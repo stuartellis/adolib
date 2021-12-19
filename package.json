@@ -1,6 +1,6 @@
 {
   "name": "adolib",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Utility library for working with Azure DevOps",
   "main": "index.js",
   "scripts": {
@@ -38,7 +38,6 @@
     "nyc": "^15.1.0"
   },
   "dependencies": {
-    "axios": "^0.24.0",
-    "urijs": "^1.19.7"
+    "axios": "^0.24.0"
   }
 }
