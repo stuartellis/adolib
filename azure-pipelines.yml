@@ -31,17 +31,17 @@ stages:
             displayName: Install dependencies
             inputs:
               command: custom
-              customCommand: ci
+              customCommand: ci --ignore-scripts
         
           - task: Npm@1
-            displayName: 'Lint'
+            displayName: Linter checks
             inputs:
-              command: 'custom'
-              customCommand: 'run ci:lint'
+              command: custom
+              customCommand: run ci:lint
 
           - task: PublishTestResults@2
             condition: succeededOrFailed()
-            displayName: Publish lint results
+            displayName: Publish linter results
             inputs:
               testRunner: JUnit
               testResultsFiles: '**/lint-results.xml'
@@ -50,7 +50,7 @@ stages:
           - bash: | 
               export NOCK_BACK_MODE=lockdown
               npm run ci:test
-            displayName: Run unit tests
+            displayName: Unit tests
         
           - task: PublishTestResults@2
             condition: succeededOrFailed()
@@ -83,7 +83,7 @@ stages:
             displayName: Install dependencies
             inputs:
               command: custom
-              customCommand: ci
+              customCommand: ci --omit=dev --ignore-scripts
           - task: Npm@1
             displayName: Publish npm package
             inputs:
