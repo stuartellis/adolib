@@ -33,7 +33,7 @@ async function checkSuccess(response) {
 */
 async function validateData(response) {
   if (response.data) {
-    return response
+    return response;
   } else {
     const error = new Error(`Missing data HTTP ${response.status} ${response.config.method} ${response.config.url}`);
     error.response = response;
