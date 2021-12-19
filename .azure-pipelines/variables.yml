@@ -1,0 +1,9 @@
+variables:
+  - name: name
+    value: adolib
+  - name: nodejsVersion
+    value: 14.x
+  - name: releaseFeedName
+    value: sje-ado-labs-npm
+  - name: vmImage
+    value: ubuntu-20.04
