@@ -64,11 +64,6 @@ stages:
             inputs:
               versionSpec: ${{ variables.nodejsVersion }}
           - task: Npm@1
-            displayName: Install dependencies
-            inputs:
-              command: custom
-              customCommand: ci --omit=dev --ignore-scripts
-          - task: Npm@1
             displayName: Publish npm package
             inputs:
               command: publish

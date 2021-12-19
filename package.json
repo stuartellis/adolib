@@ -1,6 +1,6 @@
 {
   "name": "adolib",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Utility library for working with Azure DevOps",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,10 @@
     "url": "https://github.com/stuartellis/adolib/issues"
   },
   "homepage": "https://github.com/stuartellis/adolib#readme",
+  "files": [
+    "index.js",
+    "src"
+  ],
   "devDependencies": {
     "eslint": "^8.5.0",
     "husky": "^7.0.4",
