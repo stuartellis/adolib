@@ -1,5 +1,5 @@
-const pat = require('./pat');
-const response = require('./response');
-const restClient = require('./restClient');
+const pat = require('src/pat');
+const response = require('src/response');
+const restClient = require('src/restClient');
 
-module.exports = { restClient, pat, response };
+module.exports = { pat, response, restClient };
