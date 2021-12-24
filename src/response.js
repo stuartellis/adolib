@@ -47,7 +47,8 @@ async function validateData(response) {
  * @return {Object} - Response
 */
 async function validateStatus(response) {
-  if (response.status && response.status === 200) {
+  const successCodes = [200, 201];
+  if (response.status && successCodes.includes(response.status)) {
     return response;
   } else {
     const err = new Error(`Unsuccessful request HTTP ${response.status} ${response.config.method.toUpperCase()} ${response.config.url}`);
