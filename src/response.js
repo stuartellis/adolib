@@ -47,7 +47,7 @@ async function validateData(response) {
  * @return {Object} - Response
 */
 async function validateStatus(response) {
-  const successCodes = [200, 201];
+  const successCodes = [200, 201, 204];
   if (response.status && successCodes.includes(response.status)) {
     return response;
   } else {
