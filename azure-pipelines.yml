@@ -12,6 +12,14 @@ trigger:
       - CONTRIBUTING.md
       - README.md
 
+resources:
+  pipelines:
+    - pipeline: scheduled-tasks
+      source: scheduled-tasks
+      trigger:
+        stages:
+          - triggerTests
+
 stages:
   - stage: test
     displayName: Test
@@ -21,18 +29,17 @@ stages:
         pool:
           vmImage: ${{ variables.vmImage }}
         steps:
-
           - task: NodeTool@0
-            displayName: Use Node.js ${{ variables.nodejsVersion }} 
+            displayName: Use Node.js ${{ variables.nodejsVersion }}
             inputs:
               versionSpec: ${{ variables.nodejsVersion }}
-        
+
           - task: Npm@1
             displayName: Install dependencies
             inputs:
               command: custom
               customCommand: ci --ignore-scripts
-        
+
           - task: Npm@1
             displayName: Linter checks
             inputs:
@@ -44,28 +51,28 @@ stages:
             displayName: Publish linter results
             inputs:
               testRunner: JUnit
-              testResultsFiles: '**/lint-results.xml'
+              testResultsFiles: "**/lint-results.xml"
               testRunTitle: ${{variables.name}}-lint-results
 
-          - bash: | 
+          - bash: |
               export NOCK_BACK_MODE=lockdown
               npm run ci:test
             displayName: Unit tests
-        
+
           - task: PublishTestResults@2
             condition: succeededOrFailed()
             displayName: Publish unit test results
             inputs:
               testRunner: JUnit
-              testResultsFiles: '**/test-results.xml'
+              testResultsFiles: "**/test-results.xml"
               testRunTitle: ${{variables.name}}-unit-tests
 
           - task: PublishCodeCoverageResults@1
             condition: succeededOrFailed()
             displayName: Publish code coverage report
-            inputs: 
+            inputs:
               codeCoverageTool: Cobertura
-              summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
+              summaryFileLocation: "$(System.DefaultWorkingDirectory)/**/*coverage.xml"
 
   - stage: publish
     displayName: Publish
@@ -76,7 +83,7 @@ stages:
           vmImage: ${{ variables.vmImage }}
         steps:
           - task: NodeTool@0
-            displayName: Use Node.js ${{ variables.nodejsVersion }} 
+            displayName: Use Node.js ${{ variables.nodejsVersion }}
             inputs:
               versionSpec: ${{ variables.nodejsVersion }}
           - task: Npm@1
