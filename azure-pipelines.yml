@@ -74,26 +74,27 @@ stages:
               codeCoverageTool: Cobertura
               summaryFileLocation: "$(System.DefaultWorkingDirectory)/**/*coverage.xml"
 
-  - stage: publish
-    displayName: Publish
-    jobs:
-      - job: publish
-        displayName: Publish artifacts
-        pool:
-          vmImage: ${{ variables.vmImage }}
-        steps:
-          - task: NodeTool@0
-            displayName: Use Node.js ${{ variables.nodejsVersion }}
-            inputs:
-              versionSpec: ${{ variables.nodejsVersion }}
-          - task: Npm@1
-            displayName: Install dependencies
-            inputs:
-              command: custom
-              customCommand: ci --omit=dev --ignore-scripts
-          - task: Npm@1
-            displayName: Publish npm package
-            inputs:
-              command: publish
-              publishRegistry: useFeed
-              publishFeed: $(System.TeamProject)/${{variables.releaseFeedName}}
+  - ${{ if ne(Build.Reason, 'ResourceTrigger') }}:
+      - stage: publish
+        displayName: Publish
+        jobs:
+          - job: publish
+            displayName: Publish artifacts
+            pool:
+              vmImage: ${{ variables.vmImage }}
+            steps:
+              - task: NodeTool@0
+                displayName: Use Node.js ${{ variables.nodejsVersion }}
+                inputs:
+                  versionSpec: ${{ variables.nodejsVersion }}
+              - task: Npm@1
+                displayName: Install dependencies
+                inputs:
+                  command: custom
+                  customCommand: ci --omit=dev --ignore-scripts
+              - task: Npm@1
+                displayName: Publish npm package
+                inputs:
+                  command: publish
+                  publishRegistry: useFeed
+                  publishFeed: $(System.TeamProject)/${{variables.releaseFeedName}}
